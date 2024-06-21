@@ -22,6 +22,6 @@ steps:
 - task: PowerShell@2
   displayName: "Execute Regression"
   inputs:
-    filePath: 'test_code.ps1'
+    filePath: 'pipeline.ps1'
     arguments: '-e $(base_url) -w $(workspace_id) -t $(token) -r $(rule_id)'
     pwsh: true
