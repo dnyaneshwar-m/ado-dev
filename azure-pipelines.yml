@@ -10,10 +10,10 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  base_url: $(base_url)
-  workspace_id: $(workspace_id)
-  token: $(token)
-  rule_id: $(rule_id)
+  base_url: $(BaseUrl)
+  workspace_id: $(WorkspaceId)
+  token: $(AuthToken)
+  rule_id: $(RuleId)
 
 steps:
 - script: echo Data Vision 2022 Demo!
