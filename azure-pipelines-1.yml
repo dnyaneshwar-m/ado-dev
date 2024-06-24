@@ -7,11 +7,15 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  domain_name : $(DomainName)
+  ip : $(IP)
+
 steps:
 - script: |
     echo "##vso[task.setvariable variable=IS_PIPELINE]true"
-    IP_ADDRESS="192.168.100.12"
-    DOMAIN="qa.onprem.icedq.com"
+    IP_ADDRESS= $ip
+    DOMAIN= $domain_name
     HOSTS_LINE="$IP_ADDRESS $DOMAIN"
     if ! grep -q "$HOSTS_LINE" /etc/hosts; then
       sudo sh -c "echo '$HOSTS_LINE' >> /etc/hosts"
