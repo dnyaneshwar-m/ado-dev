@@ -11,7 +11,7 @@ Param(
 ##########################
 #Fetching the Token
 
-$url = "$e/auth/realms/iam.icedq/protocol/openid-connect/token"
+$url = "$e+/auth/realms/iam.icedq/protocol/openid-connect/token"
 
 $headers = @{
     "Content-type"  = "application/x-www-form-urlencoded"
@@ -41,7 +41,7 @@ $date = Get-Date
 ##########################
 # Trigger rule run API
 $base_url = [string]$e
-$ruleTriggerUrl = "$base_url/workflow:trigger"
+$ruleTriggerUrl = "$base_url+api/v1/workflow:trigger"
 $workspaceId = [string]$w
 $sleep = 5
 $payload = @{
