@@ -1,0 +1,23 @@
+# Pipeline to modify the /etc/hosts file
+# This pipeline checks for an existing entry before adding a new one to avoid duplicates
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+    echo "##vso[task.setvariable variable=IS_PIPELINE]true"
+    IP_ADDRESS="192.168.100.30"
+    DOMAIN="dev.onprem.icedq.com"
+    HOSTS_LINE="$IP_ADDRESS $DOMAIN"
+    if ! grep -q "$HOSTS_LINE" /etc/hosts; then
+      sudo sh -c "echo '$HOSTS_LINE' >> /etc/hosts"
+      echo "$HOSTS_LINE added to /etc/hosts"
+    else
+      echo "$HOSTS_LINE already exists in /etc/hosts"
+    fi
+  displayName: 'Modify /etc/hosts file'
+
