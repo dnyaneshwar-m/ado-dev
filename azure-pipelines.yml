@@ -24,6 +24,6 @@ steps:
   displayName: "Execute Regression"
   inputs:
     filePath: 'pipeline.ps1'
-    arguments: '-e $(base_url) -w $(workspace_id) -r $(rule_id) -$u $(username) -p $(password)'
+    arguments: '-e $(base_url) -w $(workspace_id) -r $(rule_id) -u $(username) -p $(password)'
     pwsh: true
 
