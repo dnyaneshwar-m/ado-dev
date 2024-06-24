@@ -26,8 +26,13 @@ $body = @{
     "password"   = $p
 }
 
-$response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $body
-$access_token = $response.access_token
+try {
+    $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $body
+    $access_token = $response.access_token
+} catch {
+    Write-Error "Failed to fetch access token: $_"
+    exit 1
+}
 
 ##########################
 # Setting up static variables & functions
@@ -72,6 +77,7 @@ $headers_result = @{
 $resultUrl = "$base_url/workflowruns/$instanceId/result"
 
 while ($true) {
+  try{
     $response_result = Invoke-RestMethod -Uri $resultUrl -Method Get -Headers $headers_result
     if ($response_result.status -eq "running") {
         Write-Output "Rule still running. Waiting for 5 seconds..."
@@ -81,5 +87,9 @@ while ($true) {
         Write-Output "Rule Status:"$response_result.status
         Write-Output "Result: $($response_result | ConvertTo-Json -Depth 10)"
         break
+    }
+  }catch{
+  Write-Error "Failed to fetch rule status: $_"
+        exit 1
     }
 }
