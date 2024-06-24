@@ -1,0 +1,18 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Checking DNS and IP Connectivity!
+  displayName: 'Start pipeline'
+
+- script: |
+    DOMAIN_NAME="dev.onprem.icedq.com"
+    IP_ADDRESS="192.168.100.30"
+    echo "Pinging domain: $DOMAIN_NAME"
+    ping -c 4 $DOMAIN_NAME
+    echo "Pinging IP address: $IP_ADDRESS"
+    ping -c 4 $IP_ADDRESS
+  displayName: 'Ping Domain and IP'
