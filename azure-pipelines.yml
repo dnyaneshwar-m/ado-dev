@@ -13,8 +13,8 @@ variables:
   base_url: $(BaseUrl)
   workspace_id: $(WorkspaceId)
   rule_id: $(RuleId)
-  username: $(Username)
-  password: $(Password)
+  user_name: $(Username)
+  pass_word: $(Password)
 
 steps:
 - script: echo Data Vision 2022 Demo!
@@ -24,6 +24,6 @@ steps:
   displayName: "Execute Regression"
   inputs:
     filePath: 'pipeline.ps1'
-    arguments: '-e $(base_url) -w $(workspace_id) -r $(rule_id) -u "$(username)" -p "$(password)"'
+    arguments: '-e $(base_url) -w $(workspace_id) -r $(rule_id) -u $(user_name) -p $(pass_word)'
     pwsh: true
 
