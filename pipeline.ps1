@@ -12,6 +12,7 @@ Param(
 #Fetching the Token
 
 $url = "https://dev.onprem.icedq.com/auth/realms/icedq.dev/protocol/openid-connect/token"
+
 $headers = @{
     "Content-type"  = "application/x-www-form-urlencoded"
     "x"             = "7ab54d93-a7e4-43da-9a7e-52705354405d7ab54d93-a7e4-43da-9a7e-52705354405d"
@@ -22,6 +23,7 @@ $headers = @{
 $body = @{
     "grant_type" = "password"
     "client_id"  = "icedq.admin-ui"
+    "client_secret" = "0edc406d-ba4a-477c-96f2-72be355d6d98"
     "username"   = $u
     "password"   = $p
 }
