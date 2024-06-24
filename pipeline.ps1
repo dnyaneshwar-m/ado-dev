@@ -3,10 +3,31 @@
 Param(
     [Parameter(Position = 0)][string]$e,  # Base URL
     [Parameter(Position = 1)][string]$w,  # Workspace Id
-    [Parameter(Position = 2)][string]$t,  # Token
-    [Parameter(Position = 3)][string]$r   # Rule Id
-   # [Parameter(Position = 4)][string]$f  # Check for extra input arguments ??
+    [Parameter(Position = 2)][string]$r,  # Rule Id
+    [Parameter(Position = 3)][string]$u,  # Username
+    [Parameter(Position = 4)][string]$p   # Password 
 )
+
+##########################
+#Fetching the Token
+$url = "https://app.icedq.net/auth/realms/iam.icedq/protocol/openid-connect/token?username=icedq.admin&password=D0NotSh%40re"
+
+$headers = @{
+    "Content-type"  = "application/x-www-form-urlencoded"
+    "x"             = "7ab54d93-a7e4-43da-9a7e-52705354405d7ab54d93-a7e4-43da-9a7e-52705354405d"
+    "Cookie"        = "JSESSIONID=881440F094F82574926B88F3D42A2381"
+    "Authorization" = "Bearer {{bearerToken}}"
+}
+
+$body = @{
+    "grant_type" = "password"
+    "client_id"  = "icedq.admin-ui"
+    "username"   = $u
+    "password"   = $p
+}
+
+$response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $body
+$access_token = $response.access_token
 
 ##########################
 # Setting up static variables & functions
@@ -26,7 +47,7 @@ $headers_rule = @{
     'Content-Type'  = 'application/json'
     'Accept'        = 'application/json'
     'Workspace-Id'  = $workspaceId
-    'Authorization' = "Bearer $t"
+    'Authorization' = "Bearer $access_token"
 }
 
 $response = try { Invoke-RestMethod -Uri $ruleTriggerUrl -Method Post -Body $payload -Headers $headers_rule } catch { Write-Error "Failed to trigger the workflow: $_" }
@@ -43,7 +64,7 @@ Write-Host "$date INFO: Instance Id: $instanceId"
 Start-Sleep -Seconds 1
 $headers_result = @{
     'Accept' = 'application/json'
-    'Authorization' = "Bearer $t"
+    'Authorization' = "Bearer $access_token"
     'Content-Type' = 'application/json'
     'Workspace-Id' = $workspaceId
     'Cookie' = 'JSESSIONID=1FD5BB9FCA872C103046C11D50193A69'
