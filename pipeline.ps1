@@ -11,7 +11,7 @@ Param(
 ##########################
 #Fetching the Token
 
-$url = "$e+/auth/realms/iam.icedq/protocol/openid-connect/token"
+$url = "https://app.icedq.net/auth/realms/iam.icedq/protocol/openid-connect/token"
 
 $headers = @{
     "Content-type"  = "application/x-www-form-urlencoded"
